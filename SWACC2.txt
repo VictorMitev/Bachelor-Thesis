@@ -1,0 +1,621 @@
+Building configuration...
+
+Current configuration : 17236 bytes
+!
+! Last configuration change at 16:22:39 UTC Thu Sep 3 2026 by admin
+! NVRAM config last updated at 16:22:41 UTC Thu Sep 3 2026 by admin
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SWACC2
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 9 $9$Nf50AEb7lj9qK2$rcouzszeTROFpnAPLYAcDgdM.NXwQethCKoJL533nLI
+!
+username admin secret 9 $9$Fq4zOU43MUUtII$UY9oHidbdq4NYfgHIP/wm2ytOO5TK7Q1g7gunn.arrA
+no aaa new-model
+switch 1 provision ws-c2960x-48fpd-l
+!
+!
+!
+!
+!
+!
+ip dhcp snooping vlan 10,20,30,40,50,60
+no ip dhcp snooping information option
+ip dhcp snooping
+ip domain-name LAB.local
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2985854592
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2985854592
+ revocation-check none
+ rsakeypair TP-self-signed-2985854592
+!
+!
+crypto pki certificate chain TP-self-signed-2985854592
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 32393835 38353435 3932301E 170D3236 30393032 31383032
+  33305A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 39383538
+  35343539 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100E85F 1CA88838 86240764 A2A87674 FBD55A92 A7E27237 73994E68 B5667AE3
+  BA32E423 58B7CECB DEA76FDB CC7C6BD8 498F7DF1 8D4D600B 8E4A9FA4 4BDDB654
+  6851CD98 A751095E 3118E6FE F47BACB1 AC7295C3 089523F0 A9ACCCE1 69E5A2E9
+  46A21EF4 57D665D8 5FA1555A 3A6C1271 5970E727 B7423519 8C3C016E 3F60C909
+  5A030203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 14D8E263 30BF23D3 EE64BD92 41408204 30D9715D BD301D06
+  03551D0E 04160414 D8E26330 BF23D3EE 64BD9241 40820430 D9715DBD 300D0609
+  2A864886 F70D0101 05050003 81810006 3CDBFE0A FA191C09 2005AC65 66464C10
+  736D022C 82A43523 80755563 5F72D1A4 3EBB50BA E1F1BB49 7B450578 40452DC4
+  CE57CAD2 87B63A53 7DD7CF5C 085E8429 8AE779A4 AB9C9CDE F8D00D71 4FC43E0C
+  B062364C 0D17FC25 F7CA9EA3 483F820F 95A95672 40DE58D5 B5B64B12 1EC67B0A
+  DACB2D52 C2E03365 DD5C6029 C20222
+        quit
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ description LACP-trunk-to-SWCORE
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ ip dhcp snooping trust
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ description redundancy-trunk-to-SWACC1
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ ip dhcp snooping trust
+!
+interface GigabitEthernet1/0/2
+ description LACP-members-to-SWCORE
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ channel-group 1 mode active
+ ip dhcp snooping trust
+!
+interface GigabitEthernet1/0/3
+ description LACP-members-to-SWCORE
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ channel-group 1 mode active
+ ip dhcp snooping trust
+!
+interface GigabitEthernet1/0/4
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/5
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 803f.5dd6.aea2
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/6
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/7
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/8
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/9
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/10
+ description MANAGEMENT
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/11
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/12
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 803f.5dd6.aea2
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/13
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/14
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/15
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/16
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/17
+ description EMPLOYEES
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/18
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/19
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/20
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/21
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/22
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/23
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/24
+ description GUESTS
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security maximum 3
+ switchport port-security violation restrict
+ switchport port-security aging time 15
+ switchport port-security aging type inactivity
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/25
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/26
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/27
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/28
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/29
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/30
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/31
+ description PRINTERS
+ switchport access vlan 40
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/32
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/33
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/34
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/35
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/36
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/37
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 803f.5dd6.aea2
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/38
+ description ACCESS CONTROL
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/39
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/40
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/41
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/42
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/43
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/44
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/45
+ description VIDEO SURVEILLANCE
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet1/0/46
+ shutdown
+!
+interface GigabitEthernet1/0/47
+ shutdown
+!
+interface GigabitEthernet1/0/48
+ shutdown
+!
+interface GigabitEthernet1/0/49
+ shutdown
+!
+interface GigabitEthernet1/0/50
+ shutdown
+!
+interface TenGigabitEthernet1/0/1
+ shutdown
+!
+interface TenGigabitEthernet1/0/2
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 192.168.10.4 255.255.255.240
+!
+!
+ip http server
+ip http secure-server
+ip ssh time-out 60
+ip ssh version 2
+!
+ip access-list standard ALLOWED-NETWORKS
+ permit 192.168.10.0 0.0.0.15
+ deny   any
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ access-class ALLOWED-NETWORKS in
+ login local
+ transport input ssh
+line vty 5 15
+ access-class ALLOWED-NETWORKS in
+ login local
+ transport input ssh
+!
+!
+end

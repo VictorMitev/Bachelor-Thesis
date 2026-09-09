@@ -1,0 +1,295 @@
+Building configuration...
+
+Current configuration : 6090 bytes
+!
+! Last configuration change at 01:47:38 UTC Mon Mar 1 1993
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SWCORE
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Q8iS$yUqJXQ5kVnP88Wc6qiIfO0
+!
+username admin secret 5 $1$u0eO$8lkY7cK4zlRAfFwnPs5cG.
+no aaa new-model
+system mtu routing 1500
+ip domain-name LAB.local
+!
+!
+!
+no ip dhcp snooping information option
+!
+!
+crypto pki trustpoint TP-self-signed-2555738112
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2555738112
+ revocation-check none
+ rsakeypair TP-self-signed-2555738112
+!
+!
+crypto pki certificate chain TP-self-signed-2555738112
+ certificate self-signed 01
+  30820248 308201B1 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 32353535 37333831 3132301E 170D3933 30333031 30303033
+  30335A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 35353537
+  33383131 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100E4E4 868EE5B3 36CEFC47 4546BA66 F045706D B511A62C FA8956C7 C676ADEC
+  88BEBEEC 05662336 78DD9BDC 4F162A65 0072A096 62C4C28C 4D59BD97 A86FCE6E
+  254C3828 784CCEDB 79E997D1 889B7982 C04D699C 7FA25785 F17193A1 885F907B
+  92F66E6D 77DE3B43 AAF57681 00834198 951B1A7D B223EE43 04131F87 F006CF0E
+  A4350203 010001A3 70306E30 0F060355 1D130101 FF040530 030101FF 301B0603
+  551D1104 14301282 10535743 4F52452E 4C41422E 6C6F6361 6C301F06 03551D23
+  04183016 80144206 34F07581 DBF46629 68E0F5C9 515A8DF2 9F9C301D 0603551D
+  0E041604 14420634 F07581DB F4662968 E0F5C951 5A8DF29F 9C300D06 092A8648
+  86F70D01 01040500 03818100 CB302603 9262B5FB 2E25C6DC 19793A3A CE3423F3
+  BE9C9A2D 20C2FAB6 BD9E3D72 1C2E8CD9 55EA2170 51FA2823 91A59A0E 90D62544
+  29256936 B6C8A02D D8891FF7 768C255C E66B531A 64CA3F66 2A6376BB 1F64C8D0
+  E69F2190 25D6DCA7 839D9C56 AE7492DC 66042781 7892CAF2 793C1224 4CFDA460
+  BBD61186 3F397A49 49569A1A
+        quit
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 10,20,30,40,50,60 priority 24576
+!
+vlan internal allocation policy ascending
+!
+ip ssh time-out 60
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ description LACP-trunk-to-SWACC2
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+!
+interface Port-channel2
+ description LACP-trunk-to-SWACC1
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+!
+interface GigabitEthernet0/1
+ description trunk-to-RTR
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ shutdown
+!
+interface GigabitEthernet0/3
+ shutdown
+!
+interface GigabitEthernet0/4
+ shutdown
+!
+interface GigabitEthernet0/5
+ shutdown
+!
+interface GigabitEthernet0/6
+ shutdown
+!
+interface GigabitEthernet0/7
+ shutdown
+!
+interface GigabitEthernet0/8
+ shutdown
+!
+interface GigabitEthernet0/9
+ shutdown
+!
+interface GigabitEthernet0/10
+ shutdown
+!
+interface GigabitEthernet0/11
+ shutdown
+!
+interface GigabitEthernet0/12
+ shutdown
+!
+interface GigabitEthernet0/13
+ shutdown
+!
+interface GigabitEthernet0/14
+ shutdown
+!
+interface GigabitEthernet0/15
+ shutdown
+!
+interface GigabitEthernet0/16
+ shutdown
+!
+interface GigabitEthernet0/17
+ shutdown
+!
+interface GigabitEthernet0/18
+ shutdown
+!
+interface GigabitEthernet0/19
+ shutdown
+!
+interface GigabitEthernet0/20
+ shutdown
+!
+interface GigabitEthernet0/21
+ shutdown
+!
+interface GigabitEthernet0/22
+ shutdown
+!
+interface GigabitEthernet0/23
+ shutdown
+!
+interface GigabitEthernet0/24
+ shutdown
+!
+interface GigabitEthernet0/25
+ shutdown
+!
+interface GigabitEthernet0/26
+ shutdown
+!
+interface GigabitEthernet0/27
+ shutdown
+!
+interface GigabitEthernet0/28
+ shutdown
+!
+interface GigabitEthernet0/29
+ shutdown
+!
+interface GigabitEthernet0/30
+ shutdown
+!
+interface GigabitEthernet0/31
+ shutdown
+!
+interface GigabitEthernet0/32
+ shutdown
+!
+interface GigabitEthernet0/33
+ shutdown
+!
+interface GigabitEthernet0/34
+ shutdown
+!
+interface GigabitEthernet0/35
+ shutdown
+!
+interface GigabitEthernet0/36
+ shutdown
+!
+interface GigabitEthernet0/37
+ shutdown
+!
+interface GigabitEthernet0/38
+ shutdown
+!
+interface GigabitEthernet0/39
+ shutdown
+!
+interface GigabitEthernet0/40
+ shutdown
+!
+interface GigabitEthernet0/41
+ shutdown
+!
+interface GigabitEthernet0/42
+ shutdown
+!
+interface GigabitEthernet0/43
+ shutdown
+!
+interface GigabitEthernet0/44
+ shutdown
+!
+interface GigabitEthernet0/45
+ description LACP-members-to-SWACC2
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/46
+ description LACP-members-to-SWACC2
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/47
+ description LACP-members-to-SWACC1
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/48
+ description LACP-members-to-SWACC1
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60
+ switchport mode trunk
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/49
+ shutdown
+!
+interface GigabitEthernet0/50
+ shutdown
+!
+interface GigabitEthernet0/51
+ shutdown
+!
+interface GigabitEthernet0/52
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 192.168.10.2 255.255.255.240
+!
+ip http server
+ip http secure-server
+!
+!
+!
+ip access-list standard ALLOWED-NETWORKS
+ permit 192.168.10.0 0.0.0.15
+ deny   any
+!
+logging esm config
+!
+!
+!
+line con 0
+line vty 0 4
+ access-class ALLOWED-NETWORKS in
+ login local
+ transport input ssh
+line vty 5 15
+ access-class ALLOWED-NETWORKS in
+ login local
+ transport input ssh
+!
+end
